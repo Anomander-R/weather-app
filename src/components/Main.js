@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
-import WeatherCard from "./WeatherCard";
+import WeatherDisplay from "./WeatherDisplay";
 import LocationWeather from "./LocationWeather";
-
+import LoadingIndicator from "./LoadingIndicator";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
 
@@ -17,18 +17,36 @@ const Main = () => {
   const [locationArray, setLocationArray] = useState([]); // longitute, latitude, country code
   //-- WeatherInfo consists of cityName, temperature, skyCondition, windSpeed, windDirection, countryFlag--//
   const [weatherInfo, setWeatherInfo] = useState(""); 
-  const [weatherInfoArray, setWeatherInfoArray] = useState(""); 
+  const [weatherInfoArray, setWeatherInfoArray] = useState([]); 
   const [counter, setCounter]=useState(0);
-  const [inputVisible, setInputVisible] = useState(true);
- 
-  const [components, setComponents] = useState([])
+  const [inputVisible, setInputVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [components, setComponents] = useState([]);
+  const [childRequest, setChildRequest] = useState('');
+
+
+  useEffect(() => {
+    if (cityName !== weatherInfo.loc && cityName !==""){
+      
+      const timer = setTimeout(() => {
+        setLoading(true);
+      }, 500);
+      return () => clearTimeout(timer);
+
+
+    }
+  }, [cityName])
+
+  useEffect(() => {
+    if (cityName === weatherInfo.loc){ 
+      setLoading(false);
+    }
+  }, [weatherInfo])
 
 
   const addNewCityName =(param)=>{
 
-    // checking with existing locations
-    // if OK than setLocation
-    if (param !=""){
+    if (param !==""){
     setCityName(param);
     countUp();}
   }
@@ -38,8 +56,6 @@ const Main = () => {
     setCounter(counter+1);
   }
 
-
-  
   const limit = 5;
   const WEATHER_API_KEY = "331a60b911fd32f8ab56674a027f967b";
   const locationURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${WEATHER_API_KEY}`;
@@ -49,7 +65,7 @@ const Main = () => {
 
 
 
-  const {lat, lon, countryCode} = location;
+  const {lat, lon} = location;
     const weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`
 
   const determineLocation = () => {
@@ -68,7 +84,7 @@ const Main = () => {
   };
 
   const updateLocationArray = ()=>{
-    if (location !=""){
+    if (location !==""){
       const temp = [...locationArray];
       temp.push(location);
       setLocationArray(temp);
@@ -112,7 +128,7 @@ const Main = () => {
 
   const updateWeatherArray =()=>{
 
-    if (weatherInfo !=""){
+    if (weatherInfo !==""){
       const temp = [...weatherInfoArray];
       temp.push(weatherInfo);
       setWeatherInfoArray(temp);
@@ -128,13 +144,13 @@ const Main = () => {
   }, [])
 
   useEffect(() => {
-    determineLocation();
-    //determineLocationArray();
+    if (cityName!==''){
+    determineLocation();}
   }, [cityName])
 
 
 useEffect(() => {
-  if (cityName != ''){
+  if (cityName !== ''){
     let temp = [...cityNameArray];
     temp.push(cityName)
     setCityNameArray(temp);
@@ -147,39 +163,90 @@ useEffect(() => {
 
 
   useEffect(() => {
-    determineWeather();
+    if (location!==''){
+    determineWeather();}
   }, [location])
 
   useEffect(() => {
     updateWeatherArray();
-    
+    setLoading(false);
   }, [weatherInfo])
 
-const fillComponents = (array)=>{
+  const removeWeatherComponent = (param)=>{
 
-  let compArray = [];
-  let arr = [...array];
+    let arr = [...locationArray];
+    let ordinalNumber = -10;
 
-  arr.forEach( element =>{
-    compArray.push(<WeatherCard weatherInfo={element} key={element.id} label={element.id}/>)
-  })
+    console.log(ordinalNumber);
+    ordinalNumber = arr.findIndex(checkIndex)
+    console.log(ordinalNumber);
 
-  return compArray;
+    function checkIndex(a){
+      return (a.id===param)
+    }
+    
+
+    
+    let arr0 = [...components]
+    arr0.splice(ordinalNumber,1);
+    let arr1 = [...weatherInfoArray]
+    arr1.splice(ordinalNumber,1);
+    let arr2 = [...locationArray]
+    arr2.splice(ordinalNumber,1);
+    let arr3 = [...cityNameArray];
+    arr3.splice(ordinalNumber,1);
+
+
+    //console.table(arr3)
+
+    setCityNameArray(arr3);
+    setLocationArray(arr2);
+    setWeatherInfoArray(arr1);
+    setComponents(arr0);
+    setCityName('');
+    setChildRequest('');
+    setLocation('');
+    setWeatherInfo('');
+    setLoading(false);
+  }
+
+  useEffect(() => {
+
+    if (childRequest!==''){
+
+      removeWeatherComponent(childRequest);
+    }
+  }, [childRequest])
+
+  const fillComponents = (array)=>{
+    let compArray = [];
+    let arr = [...array];
+    arr.forEach( element =>{
+      compArray.push(<WeatherDisplay 
+        weatherInfo={element} 
+        key={element.id} 
+        label={element.id}
+        setChildRequest={setChildRequest}/>)
+    })
+    return compArray;
 }
 
   useEffect(() => {
     let temp = fillComponents(weatherInfoArray)
     setComponents(temp);
+    setLoading(false);
   }, [weatherInfoArray])
+
+
+
 
 
   return (
     <div>
       <TopBar/>
-      {/* <WeatherCard weatherInfo={weatherInfo}/> */}
       {components}
       {inputVisible ? <LocationWeather setInputVisible={setInputVisible} addNewCityName={addNewCityName}/> : null}
-
+      {loading && inputVisible ? <LoadingIndicator/> : null}
       <BottomBar inputVisible={inputVisible} setInputVisible={setInputVisible}/>
     </div>
   );
