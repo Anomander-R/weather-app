@@ -8,6 +8,9 @@ import LoadingIndicator from "./LoadingIndicator";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
 
+import { Grid } from "@mui/material";
+
+
 
 const Main = () => {
 
@@ -222,11 +225,11 @@ useEffect(() => {
     let compArray = [];
     let arr = [...array];
     arr.forEach( element =>{
-      compArray.push(<WeatherDisplay 
+      compArray.push(<div class="flex-container-child"><WeatherDisplay 
         weatherInfo={element} 
         key={element.id} 
         label={element.id}
-        setChildRequest={setChildRequest}/>)
+        setChildRequest={setChildRequest}/></div>)
     })
     return compArray;
 }
@@ -244,9 +247,13 @@ useEffect(() => {
   return (
     <div>
       <TopBar/>
+      
+        <div   class="flex-container">
       {components}
-      {inputVisible ? <LocationWeather setInputVisible={setInputVisible} addNewCityName={addNewCityName}/> : null}
-      {loading && inputVisible ? <LoadingIndicator/> : null}
+      </div>
+      <div>{inputVisible ? <LocationWeather setInputVisible={setInputVisible} addNewCityName={addNewCityName}/> : null}
+      </div><div> {loading && inputVisible ? <LoadingIndicator/> : null}</div>
+      
       <BottomBar inputVisible={inputVisible} setInputVisible={setInputVisible}/>
     </div>
   );

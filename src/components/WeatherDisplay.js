@@ -1,14 +1,15 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
+import WindArrow from "./WindArrow";
+
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import ReactCountryFlag from "react-country-flag";
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Grid } from "@mui/material";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
 
-
-const WeatherDisplay = ({ weatherInfo, label, setChildRequest}) => {
+const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
   const {
     loc,
     temp,
@@ -19,13 +20,10 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest}) => {
     country,
   } = weatherInfo;
 
-
-  const handleClick=(e)=>{
+  const handleClick = (e) => {
     e.preventDefault();
-    // Remove this element from an array of elements
-    console.log('Implement Remove!')
     setChildRequest(label);
-  }
+  };
 
   return (
     <Fragment key={label}>
@@ -34,7 +32,7 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest}) => {
           width: 410,
           height: 130,
           backgroundColor: "#f3e5f5",
-          marginBottom: 2
+          marginBottom: 2,
         }}
       >
         <Fragment>
@@ -52,10 +50,21 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest}) => {
             }}
           >
             <Paper elevation={0}>
-              <Typography variant="subtitle1" sx={{ textTransform: 'capitalize', fontWeight: 'medium' }} >{loc}</Typography>{" "}
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  marginTop: "7px",
+                  textTransform: "capitalize",
+                  fontWeight: "medium",
+                }}
+              >
+                {loc}
+              </Typography>
             </Paper>
             <Paper elevation={0}>
-              <Typography variant="subtitle1"></Typography>
+              <Typography variant="subtitle1">
+                <WindArrow windDirection={windDirection} />
+              </Typography>
             </Paper>
             <Paper elevation={0}>
               <Typography variant="subtitle1">
@@ -88,13 +97,14 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest}) => {
               <Typography variant="subtitle1">{temp}&#8451;</Typography>{" "}
             </Paper>
             <Paper elevation={0}>
-              <img
-                src={`${skyIcon}`}
-                width="32px"
-                alt={skyDescription}
-                title={skyDescription}
-                loading="lazy"
-              />
+              <Tooltip title={skyDescription} arrow>
+                <img
+                  src={`${skyIcon}`}
+                  width="32px"
+                  alt={skyDescription}
+                  loading="lazy"
+                />
+              </Tooltip>
             </Paper>
             <Paper elevation={0}>
               <Typography variant="subtitle1">{windSpeed} m/s</Typography>
@@ -115,16 +125,18 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest}) => {
             }}
           >
             <Paper elevation={0}>
-            <Button variant="outlined" onClick={handleClick} size="small" startIcon={<DeleteIcon />} >Remove</Button>
+              <Button
+                variant="outlined"
+                onClick={handleClick}
+                size="small"
+                startIcon={<DeleteIcon />}
+              >
+                Remove
+              </Button>
             </Paper>
-            <Paper elevation={0}>
-              
-            </Paper>
-            <Paper elevation={0}>
-             
-            </Paper>
+            <Paper elevation={0}></Paper>
+            <Paper elevation={0}></Paper>
           </Box>
-
         </Fragment>
       </Box>
     </Fragment>

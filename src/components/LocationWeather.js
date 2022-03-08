@@ -15,22 +15,16 @@ const LocationWeather = ({setInputVisible, addNewCityName}) => {
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        alert(`Vrijednost inputa je: ${input}`)
+        //alert(`Vrijednost inputa je: ${input}`)
         addNewCityName(input);
         setInput('')
         setInputVisible(false);
-        // ovdje dodati funkciju koja će ovu komponentu resetovati
-        // i koja će je sakriti sa ekrana
-        // i koja će proslijediti lokaciju u glavnu komponentu
     }
 
     const handleClick=(e)=>{
         e.preventDefault();
         setInput('')
         setInputVisible(false);
-        // ovdje dodati funkciju koja će ovu komponentu resetovati
-        // i koja će je sakriti sa ekrana
-        // ova funkcija neće proslijediti lokaciju u glavnu komponentu
     }
 
 
@@ -47,8 +41,6 @@ const LocationWeather = ({setInputVisible, addNewCityName}) => {
             },
         }}
         >
-            {/* Form < */}
-
             <Box
             component="form"
             sx={{

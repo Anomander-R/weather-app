@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment} from 'react'
 import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -36,7 +36,6 @@ const BottomBar = ({inputVisible, setInputVisible}) => {
             <AddIcon />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
-
         </Toolbar>
       </AppBar>
 
