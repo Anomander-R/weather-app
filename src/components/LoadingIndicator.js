@@ -9,6 +9,7 @@ const LoadingIndicator = () => {
         <Box sx={{ 
                     display: 'flex',
                     width: 350,
+                    height: 130,
                     m: 3
                 }}>
             <Grid container direction="column" alignItems="center" justify="center">

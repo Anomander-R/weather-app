@@ -1,13 +1,9 @@
 import React, { Fragment } from "react";
-import WindArrow from "./WindArrow";
-
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
+import { Typography, Button, Tooltip, Box, Paper } from "@mui/material";
 import ReactCountryFlag from "react-country-flag";
-import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Tooltip from "@mui/material/Tooltip";
+
+import WindArrow from "./WindArrow";
 
 const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
   const {
@@ -22,7 +18,7 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setChildRequest(label);
+    setChildRequest(loc);
   };
 
   return (

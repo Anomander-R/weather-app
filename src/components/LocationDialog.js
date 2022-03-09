@@ -1,10 +1,8 @@
 import React, {useState} from 'react'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import {Box, TextField, Button} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const LocationWeather = ({setInputVisible, addNewCityName}) => {
+const LocationDialog = ({setInputVisible, addNewCityName, setChildRequest}) => {
 
     const [input, setInput] = useState('');
     
@@ -15,7 +13,6 @@ const LocationWeather = ({setInputVisible, addNewCityName}) => {
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        //alert(`Vrijednost inputa je: ${input}`)
         addNewCityName(input);
         setInput('')
         setInputVisible(false);
@@ -25,11 +22,12 @@ const LocationWeather = ({setInputVisible, addNewCityName}) => {
         e.preventDefault();
         setInput('')
         setInputVisible(false);
+        setChildRequest('D3l3t3M3');
     }
 
 
   return (
-    <div>Location Weather
+    <div>
         <Box
         sx={{
             width: 410,
@@ -51,7 +49,7 @@ const LocationWeather = ({setInputVisible, addNewCityName}) => {
             onChange={handleChange}
             onSubmit={handleSubmit}
             >
-            <TextField id="standard-basic" label="Enter location" variant="standard" />
+            <TextField id="standard-basic" label="Enter location" variant="standard" autoFocus/>
             </Box>
 
             <Button variant="contained" onClick={handleClick} size="small" startIcon={<DeleteIcon />} >Remove</Button>
@@ -63,4 +61,4 @@ const LocationWeather = ({setInputVisible, addNewCityName}) => {
   )
 }
 
-export default LocationWeather
+export default LocationDialog
