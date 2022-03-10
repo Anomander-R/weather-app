@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import LocationWeatherNew from "./LocationWeatherNew";
-import BottomBar from "./BottomBar";
-import HeaderBar from "./HeaderBar";
+import {LocationWeatherNew, BottomBar, HeaderBar} from '.';
+
 
 const Main = () => {
 
@@ -11,7 +10,6 @@ const Main = () => {
   const [components, setComponents] = useState([]);
   const [childRequest, setChildRequest] = useState('');
   const [buttonVisible, setButtonVisible] = useState(true);
-
   const [loadadFromStorage, setLoadedFromStorage] =  useState(false);
 
 
@@ -22,7 +20,7 @@ const Main = () => {
   const readWeatherLocations = ()=>{
     const saved = localStorage.getItem("weatherLocations");
     const arr = JSON.parse(saved);
-    console.log (arr);
+    //console.log (arr);
     return arr;
   }
 
@@ -36,14 +34,14 @@ const Main = () => {
 
   useEffect(() => {
     if (loadadFromStorage){
-    console.log('Loaded from STORAGE TRUE');
+    //console.log('Loaded from STORAGE TRUE');
 
 
     if (cityNameArray!==[] && newRequest ==='not-yet'){   
       let temp = fillComponents(cityNameArray)
       setComponents(temp);}
   } else{
-    console.log('Loaded from STORAGE NOT TRUE');
+    //.log('Loaded from STORAGE NOT TRUE');
     }
   }, [loadadFromStorage])
 
@@ -113,7 +111,7 @@ useEffect(() => {
     let arr = [...array];
 
     arr.forEach( (element, index) =>{
-      console.log(element);
+      //console.log(element);
       compArray.push(<LocationWeatherNew
         element={element} 
         key={`w1${index}`} 
@@ -146,7 +144,7 @@ useEffect(() => {
     let condition1 = temp.indexOf('go-for-new-location')===-1;
     if (condition1 && condition2 && temp !== []){
       saveWeatherLocations(cityNameArray, 'saveWeatherLocation' );
-      console.log(cityNameArray);
+      //console.log(cityNameArray);
     }
   }, [cityNameArray])
 

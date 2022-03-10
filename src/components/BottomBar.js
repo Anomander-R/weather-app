@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
+import {AppBar, Box, CssBaseline, Toolbar, AddIcon} from '.';
 import { styled } from "@mui/material/styles";
-import { AppBar, Box, CssBaseline, Toolbar, Fab } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Fab } from "@mui/material";
 
 const StyledFab = styled(Fab)({
   position: "absolute",

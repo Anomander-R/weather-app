@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
-import LoadingIndicator from './LoadingIndicator';
-import WeatherDisplay from './WeatherDisplay'
+import {LoadingIndicator, WeatherDisplay} from '.';
 
 const WeatherCard = ({weatherInfo, setChildRequest, loading, label}) => {
 

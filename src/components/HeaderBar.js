@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
-import { AppBar, Box, CssBaseline, Toolbar, Typography } from "@mui/material";
-import Logo from "../assets/images/logo512.png";
+import {AppBar, Box, CssBaseline, Toolbar, Typography, Logo} from '.';
 
 const HeaderBar = () => {
   return (

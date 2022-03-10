@@ -1,7 +1,5 @@
 import React, {Fragment} from 'react'
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box'
-import { Grid } from '@mui/material';
+import {CircularProgress, Box, Grid} from '.';
 
 const LoadingIndicator = () => {
   return (

@@ -1,9 +1,8 @@
 import React, { Fragment } from "react";
-import { Typography, Button, Tooltip, Box, Paper } from "@mui/material";
-import ReactCountryFlag from "react-country-flag";
-import DeleteIcon from "@mui/icons-material/Delete";
+import {WindArrow, DeleteIcon, ReactCountryFlag,
+        Typography, Button, Tooltip, Box, Paper} from '.';
 
-import WindArrow from "./WindArrow";
+
 
 const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
   const {

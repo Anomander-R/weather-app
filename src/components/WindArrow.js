@@ -1,5 +1,5 @@
 import React from "react";
-import arrow from "../assets/images/wind_arrow.png";
+import {arrow} from ".";
 
 const WindArrow = ({ windDirection }) => {
   return (

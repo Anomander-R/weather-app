@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import LocationDialog from "./LocationDialog";
-import WeatherCard from "./WeatherCard";
+import {LocationDialog, WeatherCard} from '.';
 import axios from "axios";
 
 const LocationWeatherNew = ({
@@ -10,6 +9,11 @@ const LocationWeatherNew = ({
   setCityNameM,
   setButtonVisible,
 }) => {
+
+  //You can insert your API_KEY bellow for testing purposes
+  const { REACT_APP_API_KEY } = process.env;
+
+
   const [cityName, setCityName] = useState(""); // Input from the location
   const [errorMessage, setErrorMessage] = useState("");
   const [location, setLocation] = useState("");
@@ -18,7 +22,7 @@ const LocationWeatherNew = ({
   const [counter, setCounter] = useState(0);
   const [inputVisible, setInputVisible] = useState(true);
   const limit = 5;
-  const { REACT_APP_API_KEY } = process.env;
+  
   const locationURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${REACT_APP_API_KEY}`;
   const { lat, lon } = location;
   const weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${REACT_APP_API_KEY}`;
@@ -38,7 +42,7 @@ const LocationWeatherNew = ({
     setLoading(true);
     axios(locationURL)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         // let id = uuidv4();
         setLocation({
           id: label,
@@ -89,7 +93,6 @@ const LocationWeatherNew = ({
       //console.log('first useEffect inside if Statement, element is', element);
     }
     // eslint-disable-next-line
-    //console.log('first useEffect outside if statement, element is', element);
   }, [cityName]);
 
   // Alternate first useEffect
@@ -100,6 +103,7 @@ const LocationWeatherNew = ({
     } else if (cityName !== "" && condition2) {
       determineLocation();
     }
+    // eslint-disable-next-line
   }, [cityName]);
 
   // second useEffect
@@ -115,12 +119,31 @@ const LocationWeatherNew = ({
     // eslint-disable-next-line
   }, [location]);
 
-  // possible third useEffect
+  // third useEffect
   useEffect(() => {
     if (errorMessage !== "") {
       alert('Something went wrong, please refresh your browser!');
     }
   }, [errorMessage]);
+
+
+  // fourth useEffect refresh of the current location
+  useEffect(() => {
+
+    let minutes = Math.floor(Math.random() * 16) + 10;
+    let delay = minutes * 60000;
+    if (location !== "") {
+      const timer = setTimeout(() => {
+        determineWeather();
+        //console.log(cityName)
+        if (element !== cityName) {
+          setCityNameM(cityName);
+        }
+      }, delay);
+      return () => clearTimeout(timer);
+    
+    }
+  }, [weatherInfo])
 
   return (
     <Fragment>

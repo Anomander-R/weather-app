@@ -8,6 +8,13 @@ The Weather App is an online application for displaying current weather conditio
 
 A user interacts with the application using a keyboard (and mouse) to enter the location for which the current weather is displayed. Users can add as many location cards as they need.
 
+The API call is in fact two calls, first is using location name (cityName in app) to determine longitude and latitude of desired location, and second call is using retrieved data to receive weather data. App will continue to use an original search term to show current weather condition. If you type **Banja Luka** or **Banjaluka** you will get same data.   
+Duplication of data is allowed; you can have any location multiple times. It is easy to implement removal of duplicate entries.  
+First call yields 5 possible locations, however app is using only first one. The search for **Šip** will give you a place in Cyprus and not a place in BiH. Of course, it is possible to build a logic which will extract closest place, but application do not track current location.  
+On error (first API call) clear instruction is given to the user how to remove it. It is possible to implement removal on click but it is not implemented.  
+Refresh of the current location occurs every 10 to 25 minutes: fourth useEffect call – line 130 of LocationWeatherNew.js
+
+
 ![17weather-app](https://user-images.githubusercontent.com/90348779/157484564-a11b4b57-c83a-4c72-a936-55f03f0d965c.png)
 
 ### Application's main features
