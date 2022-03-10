@@ -12,6 +12,42 @@ const Main = () => {
   const [childRequest, setChildRequest] = useState('');
   const [buttonVisible, setButtonVisible] = useState(true);
 
+  const [loadadFromStorage, setLoadedFromStorage] =  useState(false);
+
+
+  const saveWeatherLocations = (param)=>{
+    localStorage.setItem("weatherLocations", JSON.stringify(param));
+  }
+
+  const readWeatherLocations = ()=>{
+    const saved = localStorage.getItem("weatherLocations");
+    const arr = JSON.parse(saved);
+    console.log (arr);
+    return arr;
+  }
+
+  useEffect(() => {
+    let temp = readWeatherLocations();
+    if(temp!==[]){
+      setCityNameArray(temp);
+      setLoadedFromStorage(true);
+    }
+  }, [])
+
+  useEffect(() => {
+    if (loadadFromStorage){
+    console.log('Loaded from STORAGE TRUE');
+
+
+    if (cityNameArray!==[] && newRequest ==='not-yet'){   
+      let temp = fillComponents(cityNameArray)
+      setComponents(temp);}
+  } else{
+    console.log('Loaded from STORAGE NOT TRUE');
+    }
+  }, [loadadFromStorage])
+
+
   useEffect(() => {
     if(newRequest==='go-for-new-location'){
       setCityNameM(newRequest);
@@ -102,7 +138,26 @@ useEffect(() => {
     // eslint-disable-next-line
   }, [childRequest])
 
+  // ne zapisuje nikako
+  useEffect(() => {
+    let storageTemp =readWeatherLocations();
+    let temp = [...cityNameArray];
+    let condition2=!(storageTemp===temp);
+    let condition1 = temp.indexOf('go-for-new-location')===-1;
+    if (condition1 && condition2 && temp !== []){
+      saveWeatherLocations(cityNameArray, 'saveWeatherLocation' );
+      console.log(cityNameArray);
+    }
+  }, [cityNameArray])
 
+
+  useEffect(() => {
+    
+     if (cityNameArray!==[] && newRequest !=='not-yet'){   
+    let temp = fillComponents(cityNameArray)
+    setComponents(temp);}
+    // eslint-disable-next-line     
+  }, [cityNameArray])
 
   return (
     <div>
