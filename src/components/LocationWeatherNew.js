@@ -22,7 +22,6 @@ const LocationWeatherNew = ({
   const [counter, setCounter] = useState(0);
   const [inputVisible, setInputVisible] = useState(true);
   const limit = 5;
-  
   const locationURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${REACT_APP_API_KEY}`;
   const { lat, lon } = location;
   const weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${REACT_APP_API_KEY}`;
@@ -122,7 +121,14 @@ const LocationWeatherNew = ({
   // third useEffect
   useEffect(() => {
     if (errorMessage !== "") {
-      alert('Something went wrong, please refresh your browser!');
+
+      setCityName('');
+      setErrorMessage('')
+      setLoading(false);
+      setCounter(10);
+      setInputVisible(true)
+
+      
     }
   }, [errorMessage]);
 
@@ -143,6 +149,7 @@ const LocationWeatherNew = ({
       return () => clearTimeout(timer);
     
     }
+    // eslint-disable-next-line
   }, [weatherInfo])
 
   return (
@@ -153,6 +160,7 @@ const LocationWeatherNew = ({
             setInputVisible={setInputVisible}
             addNewCityName={addNewCityName}
             setChildRequest={setChildRequest}
+            counter={counter}
             key={`c1${label}`}
           />
         ) : (

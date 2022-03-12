@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Box, TextField, Button} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const LocationDialog = ({setInputVisible, addNewCityName, setChildRequest}) => {
+const LocationDialog = ({setInputVisible, addNewCityName, setChildRequest, counter}) => {
 
     const [input, setInput] = useState('');
     
@@ -49,9 +49,24 @@ const LocationDialog = ({setInputVisible, addNewCityName, setChildRequest}) => {
             onChange={handleChange}
             onSubmit={handleSubmit}
             >
-            <TextField id="standard-basic" label="Enter location" variant="standard" autoFocus/>
-            </Box>
+           { (counter<5) ?
+            <TextField 
+            id="standard-basic" 
+            label="Enter location" 
+            variant="standard" 
+            autoFocus/>
+            
+                :
+            <TextField 
+            id="standard-basic" 
+            label="Enter location" 
+            variant="standard" 
+            helperText="Something went wrong. Try again!"
+            autoFocus/>
+            
+            }
 
+        </Box>
             <Button variant="contained" onClick={handleClick} size="small" startIcon={<DeleteIcon />} >Remove</Button>
         </Box>
 

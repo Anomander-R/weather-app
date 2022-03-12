@@ -1,8 +1,14 @@
 import React, { Fragment } from "react";
-import {WindArrow, DeleteIcon, ReactCountryFlag,
-        Typography, Button, Tooltip, Box, Paper} from '.';
-
-
+import {
+  WindArrow,
+  DeleteIcon,
+  ReactCountryFlag,
+  Typography,
+  Button,
+  Tooltip,
+  Box,
+  Paper,
+} from ".";
 
 const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
   const {
@@ -19,6 +25,20 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
     e.preventDefault();
     setChildRequest(loc);
   };
+
+  // let myLink = `https://flagcdn.com/24x18/ba.png`;
+  // if (country) {
+  //   myLink = `https://flagcdn.com/24x18/${country.toLowerCase()}.png`;
+  // }
+
+  let description = "temporary";
+  if (skyDescription) {
+    description = skyDescription;
+  }
+  let cCode = "ba";
+  if (country) {
+    cCode = country.toLowerCase();
+  }
 
   return (
     <Fragment key={label}>
@@ -62,9 +82,21 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
               </Typography>
             </Paper>
             <Paper elevation={0}>
-              <Typography variant="subtitle1">
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  marginTop: "7px",
+                }}
+              >
+                {/* <img
+                  src={`${myLink}`}
+                  width="24px"
+                  alt={country}
+                  loading="lazy"
+                /> */}
+
                 <ReactCountryFlag
-                  countryCode={`${country}`}
+                  countryCode={`${cCode}`}
                   svg
                   style={{
                     width: "24px",
@@ -92,11 +124,11 @@ const WeatherDisplay = ({ weatherInfo, label, setChildRequest }) => {
               <Typography variant="subtitle1">{temp}&#8451;</Typography>{" "}
             </Paper>
             <Paper elevation={0}>
-              <Tooltip title={skyDescription} arrow>
+              <Tooltip title={description} arrow>
                 <img
                   src={`${skyIcon}`}
                   width="32px"
-                  alt={skyDescription}
+                  alt={description}
                   loading="lazy"
                 />
               </Tooltip>
